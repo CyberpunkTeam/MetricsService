@@ -23,6 +23,6 @@ async def list_tracks():
     return TracksController.get(tracks_repository)
 
 
-@router.get("/metrics/", tags=["tracks"], response_model=List[Tracks])
+@router.get("/metrics/", tags=["tracks"])
 async def get_metrics():
     return TracksController.get_metrics(tracks_repository)
