@@ -16,3 +16,21 @@ class TracksController:
     def get(repository):
         result = repository.get()
         return result
+
+    @staticmethod
+    def get_metrics(repository):
+        result = repository.get(path="/session")
+
+        session_created = {}
+        for track in result:
+            session_created[track.created_date] = (
+                session_created.get(track.created_date, 0) + 1
+            )
+
+        result = {
+            "session_created": {
+                "labels": list(session_created.keys()),
+                "values": list(session_created.values()),
+            }
+        }
+        return result

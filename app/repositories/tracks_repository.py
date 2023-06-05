@@ -16,8 +16,11 @@ class TracksRepository(DataBase):
         else:
             super().__init__(url, db_name)
 
-    def get(self):
-        return self.filter(self.COLLECTION_NAME, {}, output_model=Tracks)
+    def get(self, path=None):
+        filters = {}
+        if path:
+            filters["path"] = path
+        return self.filter(self.COLLECTION_NAME, filters, output_model=Tracks)
 
     def insert(self, track: Tracks):
         return self.save(self.COLLECTION_NAME, track)
