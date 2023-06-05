@@ -19,8 +19,8 @@ async def create_track(track: List[Tracks]):
 
 
 @router.get("/tracks/", tags=["tracks"], response_model=List[Tracks])
-async def list_tracks():
-    return TracksController.get(tracks_repository)
+async def list_tracks(path: str = None):
+    return TracksController.get(tracks_repository, path=path)
 
 
 @router.get("/metrics/", tags=["tracks"])

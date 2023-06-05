@@ -13,8 +13,8 @@ class TracksController:
         return tracks
 
     @staticmethod
-    def get(repository):
-        result = repository.get()
+    def get(repository, path=None):
+        result = repository.get(path=path)
         return result
 
     @staticmethod
@@ -22,10 +22,14 @@ class TracksController:
         result = repository.get(path="/session")
 
         session_created = {}
+        users_loaded = {}
         for track in result:
-            session_created[track.created_date] = (
-                session_created.get(track.created_date, 0) + 1
-            )
+            user = track.uid + track.created_date
+            if user not in users_loaded:
+                users_loaded[user] = True
+                session_created[track.created_date] = (
+                    session_created.get(track.created_date, 0) + 1
+                )
 
         result = {
             "session_created": {
